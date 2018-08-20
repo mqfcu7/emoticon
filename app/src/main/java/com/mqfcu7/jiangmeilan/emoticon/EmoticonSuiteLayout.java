@@ -53,7 +53,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
 
         if (mImageViews.isEmpty()) {
-            int imageNum = Math.min(mRandom.nextInt(7) + 4, mAvatarSuite.images_url.size());
+            int imageNum = Math.min(mRandom.nextInt(7) + 4, mEmoticonSuite.images_url.size());
             try {
                 Utils.invokeMethod(this, "calcMeasure" + imageNum, null);
             } catch (Exception e) {
@@ -83,7 +83,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        mTitleView.setText(mAvatarSuite.title);
+        mTitleView.setText(mEmoticonSuite.title);
         mTitleView.setGravity(Gravity.CENTER);
         mTitleView.setLines(1);
         mTitleView.setEllipsize(TextUtils.TruncateAt.END);
@@ -102,7 +102,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         int offx = PADDING_IMAGE;
         int offy = TITLE_HEIGHT;
         for (int i = 0; i < 4; ++i) {
-            final String url = mAvatarSuite.images_url.get(i);
+            final String url = mEmoticonSuite.images_url.get(i);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -113,7 +113,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -131,7 +131,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         {
-            final String url = mAvatarSuite.images_url.get(0);
+            final String url = mEmoticonSuite.images_url.get(0);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -142,7 +142,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -152,7 +152,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         int offx = width * 2 + PADDING_IMAGE * 3;
         int offy = TITLE_HEIGHT;
         for (int i = 0; i < 4; ++ i) {
-            final String url = mAvatarSuite.images_url.get(i + 1);
+            final String url = mEmoticonSuite.images_url.get(i + 1);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -163,7 +163,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -188,7 +188,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         int offx = PADDING_IMAGE;
         int offy = TITLE_HEIGHT;
         for (int i = 0; i < 6; ++ i) {
-            final String url = mAvatarSuite.images_url.get(i);
+            final String url = mEmoticonSuite.images_url.get(i);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -199,7 +199,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -222,7 +222,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         {
-            final String url = mAvatarSuite.images_url.get(0);
+            final String url = mEmoticonSuite.images_url.get(0);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -233,7 +233,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -243,7 +243,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         int offx = width * 2 + PADDING_IMAGE * 3;
         int offy = TITLE_HEIGHT;
         for (int i = 0; i < 6; ++ i) {
-            final String url = mAvatarSuite.images_url.get(i + 1);
+            final String url = mEmoticonSuite.images_url.get(i + 1);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -254,7 +254,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -279,7 +279,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         int offx = PADDING_IMAGE;
         int offy = TITLE_HEIGHT;
         for (int i = 0; i < 8; ++ i) {
-            final String url = mAvatarSuite.images_url.get(i);
+            final String url = mEmoticonSuite.images_url.get(i);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -290,7 +290,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -313,7 +313,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         {
-            final String url = mAvatarSuite.images_url.get(0);
+            final String url = mEmoticonSuite.images_url.get(0);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -324,7 +324,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });
@@ -335,7 +335,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             int offx = width * 2 + PADDING_IMAGE * 3;
             int offy = TITLE_HEIGHT;
             for (int i = 0; i < 4; ++ i) {
-                final String url = mAvatarSuite.images_url.get(i + 1);
+                final String url = mEmoticonSuite.images_url.get(i + 1);
                 ImageView v = new ImageView(getContext());
                 v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
                 Glide.with(getContext())
@@ -346,7 +346,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
                 v.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                        Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                         getContext().startActivity(intent);
                     }
                 });
@@ -363,7 +363,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
         int offx = PADDING_IMAGE;
         int offy = width * 2 + PADDING_IMAGE * 2 + TITLE_HEIGHT;
         for (int i = 0; i < 4; ++ i) {
-            final String url = mAvatarSuite.images_url.get(i + 5);
+            final String url = mEmoticonSuite.images_url.get(i + 5);
             ImageView v = new ImageView(getContext());
             v.setPadding(PADDING_IMAGE / 2, 0, PADDING_IMAGE / 2, 0);
             Glide.with(getContext())
@@ -374,7 +374,7 @@ public class EmoticonSuiteLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), url);
                     getContext().startActivity(intent);
                 }
             });

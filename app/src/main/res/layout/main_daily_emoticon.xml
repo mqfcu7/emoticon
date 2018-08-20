@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/daily_emoticon"
+                android:scaleType="fitCenter"/>
+
+        </LinearLayout>
+
+        <com.mqfcu7.jiangmeilan.emoticon.EmoticonSuiteLayout
+            android:id="@+id/main_avatar_suite_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="5dp">
+
+        </com.mqfcu7.jiangmeilan.emoticon.EmoticonSuiteLayout>
+
+    </LinearLayout>
+</layout>
