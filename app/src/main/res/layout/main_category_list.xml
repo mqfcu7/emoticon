@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="10dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_girl_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                app:image="@drawable/star"
+                app:text="明星红人">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_boy_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                app:image="@drawable/show"
+                app:text="撩妹示爱">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_loves_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                app:image="@drawable/acgn"
+                app:text="二次元">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_friend_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:image="@drawable/festival"
+                app:text="节日热点">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_pet_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                app:image="@drawable/cute"
+                app:text="萌萌达" >
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_comic_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                app:image="@drawable/qun"
+                app:text="欢乐群聊">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_game_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="20dp"
+                app:image="@drawable/comic"
+                app:text="卡通形象">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+            <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
+                android:id="@+id/main_category_scenery_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:image="@drawable/wish"
+                app:text="祝福祝愿">
+            </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
