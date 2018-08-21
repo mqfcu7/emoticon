@@ -9,6 +9,9 @@ import com.mqfcu7.jiangmeilan.emoticon.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
+    private EmoticonSuiteLayout mDailyEmoticonLayout;
+
+    private EmoticonSuiteGenerator mEmoticonGenerator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,13 +20,19 @@ public class MainActivity extends AppCompatActivity {
         Utils.setStatusBarLightMode(this, getWindow(), true);
 
         Glide.get(getApplicationContext()).clearMemory();
+        mEmoticonGenerator = new EmoticonSuiteGenerator(getApplicationContext());
 
+        initCategoryNavigateLayout();
         initDailyAvatar();
     }
 
+    private void initCategoryNavigateLayout() {
+
+    }
+
     private void initDailyAvatar() {
-        mAvatarSuiteLayout = mBinding.dailyAvatarInclude.mainAvatarSuiteLayout;
-        mAvatarSuiteLayout.setAvatarSuite(mAvatarSuiteGenerator.randomAvatarSuite());
-        mAvatarSuiteLayout.setPaddingVertical(5);
+        mDailyEmoticonLayout = mBinding.dailyEmoticonInclude.mainEmoticonSuiteLayout;
+        mDailyEmoticonLayout.setEmoticonSuite(mEmoticonGenerator.randomEmoticonSuite());
+        mDailyEmoticonLayout.setPaddingVertical(5);
     }
 }

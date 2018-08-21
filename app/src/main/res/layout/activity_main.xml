@@ -41,6 +41,15 @@
                     android:layout_height="wrap_content"
                     />
 
+                <!-- daily emoticon -->
+                <include
+                    android:id="@+id/daily_emoticon_include"
+                    layout="@layout/main_daily_emoticon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="1000dp"

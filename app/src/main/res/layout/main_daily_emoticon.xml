@@ -15,15 +15,15 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
                 android:src="@drawable/daily_emoticon"
                 android:scaleType="fitCenter"/>
 
         </LinearLayout>
 
         <com.mqfcu7.jiangmeilan.emoticon.EmoticonSuiteLayout
-            android:id="@+id/main_avatar_suite_layout"
+            android:id="@+id/main_emoticon_suite_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="5dp">
