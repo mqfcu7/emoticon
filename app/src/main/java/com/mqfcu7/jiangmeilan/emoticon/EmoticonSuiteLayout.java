@@ -53,11 +53,11 @@ public class EmoticonSuiteLayout extends LinearLayout {
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
 
         if (mImageViews.isEmpty()) {
-            int imageNum = Math.min(mRandom.nextInt(7) + 4, mEmoticonSuite.images_url.size());
+            int imageNum = Math.min(mRandom.nextInt(5) + 4, mEmoticonSuite.images_url.size());
             try {
                 Utils.invokeMethod(this, "calcMeasure" + imageNum, null);
             } catch (Exception e) {
-                Log.w("TAG", e.toString());
+                e.printStackTrace();
             }
         }
 

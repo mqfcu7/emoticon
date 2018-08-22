@@ -63,7 +63,6 @@ public class CategoryNavigateLayout extends LinearLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         mImageBuilder.apply(new RequestOptions().override(w, w))
-                .apply(new RequestOptions().bitmapTransform(new RoundedCorners(150)))
                 .into(mImageView);
         mImageView.layout(0, 0, w, w);
         mTextView.layout(0, w + 10, w, w + (int)mTextView.getTextSize() * 2 + 10);

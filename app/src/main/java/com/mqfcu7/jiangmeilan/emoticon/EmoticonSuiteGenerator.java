@@ -27,4 +27,6 @@ public class EmoticonSuiteGenerator extends Object {
         s.images_url.add("http://wx4.sinaimg.cn/bmiddle/005A0PMely1ftpg4f5ytvg306o06on9o.gif");
         return s;
     }
+
+
 }

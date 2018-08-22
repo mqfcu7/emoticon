@@ -2,6 +2,7 @@ package com.mqfcu7.jiangmeilan.emoticon;
 
 import org.jsoup.helper.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmoticonSuite extends Object {
@@ -11,6 +12,10 @@ public class EmoticonSuite extends Object {
     public String title;
     public String describe;
     public List<String> images_url;
+
+    public EmoticonSuite() {
+        images_url = new ArrayList<>();
+    }
 
     @Override
     public String toString() {

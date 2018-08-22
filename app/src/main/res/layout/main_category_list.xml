@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_girl_layout"
+                android:id="@+id/main_category_star_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -27,7 +27,7 @@
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_boy_layout"
+                android:id="@+id/main_category_show_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -37,7 +37,7 @@
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_loves_layout"
+                android:id="@+id/main_category_acgn_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -47,7 +47,7 @@
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_friend_layout"
+                android:id="@+id/main_category_festival_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,7 +63,7 @@
             android:orientation="horizontal">
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_pet_layout"
+                android:id="@+id/main_category_cute_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,7 +73,7 @@
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_comic_layout"
+                android:id="@+id/main_category_qun_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -83,7 +83,7 @@
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_game_layout"
+                android:id="@+id/main_category_comic_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -93,7 +93,7 @@
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout
-                android:id="@+id/main_category_scenery_layout"
+                android:id="@+id/main_category_wish_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

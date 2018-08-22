@@ -1,7 +1,9 @@
 package com.mqfcu7.jiangmeilan.emoticon;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -92,6 +94,48 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public long getNewEmoticonSuiteNum() {
+        SQLiteDatabase db = getReadableDatabase();
+        return DatabaseUtils.queryNumEntries(db, TABLE_EMOTICON_SUITE, EmoticonSuiteColumns.VISITED + "=0");
+    }
+
+    public boolean isExistEmoticonSuite(final  EmoticonSuite emoticonSuite) {
+        boolean result = false;
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TABLE_EMOTICON_SUITE);
+        qb.appendWhere(EmoticonSuiteColumns.HASH + "=" + emoticonSuite.hash);
+        Cursor c = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            c = qb.query(db, null, null, null, null, null, null);
+            if (c.moveToFirst()) {
+                result = true;
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean addEmoticonSuite(final EmoticonSuite emoticonSuite) {
+        if (isExistEmoticonSuite(emoticonSuite)) return false;
+
+        ContentValues values = new ContentValues();
+        values.put(EmoticonSuiteColumns.HASH, emoticonSuite.hash);
+        values.put(EmoticonSuiteColumns.TITLE, emoticonSuite.title);
+        values.put(EmoticonSuiteColumns.DESCRIBE, emoticonSuite.describe);
+        values.put(EmoticonSuiteColumns.IMAGE_NUM, emoticonSuite.images_url.size());
+        values.put(EmoticonSuiteColumns.IMAGES_URL, serializeImagesUrl(emoticonSuite.images_url));
+        values.put(EmoticonSuiteColumns.VISITED, 0);
+
+        SQLiteDatabase db = getReadableDatabase();
+        db.insert(TABLE_EMOTICON_SUITE, EmoticonSuiteColumns._ID, values);
+
+        return true;
+    }
+
     public List<EmoticonSuite> getBatchEmoticonSuites(int num) {
         List<EmoticonSuite> result = new ArrayList<>();
 
@@ -113,9 +157,18 @@ public class Database extends SQLiteOpenHelper {
             }
         }
 
-        // updateVisitedAvatarSuites
+        updateVisitedEmoticonSuites(result);
 
         return result;
+    }
+
+    private void updateVisitedEmoticonSuites(final List<EmoticonSuite> emoticonSuites) {
+        SQLiteDatabase db = getWritableDatabase();
+        for (EmoticonSuite es : emoticonSuites) {
+            ContentValues values = new ContentValues();
+            values.put(EmoticonSuiteColumns.VISITED, 1);
+            db.update(TABLE_EMOTICON_SUITE, values, EmoticonSuiteColumns._ID + "=" + es.id, null);
+        }
     }
 
     private EmoticonSuite buildEmoticonSuite(Cursor c) {
