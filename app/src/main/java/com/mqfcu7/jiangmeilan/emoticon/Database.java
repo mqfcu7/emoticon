@@ -19,13 +19,24 @@ import java.util.Random;
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "com.mqfcu7.jianmeilan.emoticon";
     private static final String TABLE_EMOTICON_SUITE = "emoticon_suite";
-    private static final String TABLE_AVATARS = "emoticon";
+    private static final String TABLE_EMOTICON = "emoticon";
     private static final String TABLE_JOKE_SUITE = "joke_suite";
 
     private static final int DATABASE_VERSION = 1;
 
     private Context mContext;
     private Random mRandom = new Random();
+
+    public static class EmoticonType {
+        public static final int STAR = 1;
+        public static final int SHOW = 2;
+        public static final int ACGN = 3;
+        public static final int FESTIVAL = 4;
+        public static final int CUTE = 5;
+        public static final int QUN = 6;
+        public static final int COMIC = 7;
+        public static final int WISH = 8;
+    }
 
     public abstract class EmoticonSuiteColumns implements BaseColumns {
         public static final String HASH = "hash";
@@ -34,6 +45,14 @@ public class Database extends SQLiteOpenHelper {
         public static final String IMAGE_NUM = "image_num";
         public static final String IMAGES_URL = "images_url";
         public static final String VISITED = "visited";
+    }
+
+    public abstract class EmoticonColumns implements BaseColumns {
+        public static final String ID = "id";
+        public static final String HASH = "hash";
+        public static final String TYPE = "type";
+        public static final String IMAGE_URL = "image_url";
+        public static final String TIME = "time";
     }
 
     public abstract class JokeSuiteColumns implements BaseColumns {
@@ -55,6 +74,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createEmoticonSuiteTable(db);
+        createEmoticonsTable(db);
         createJokeSuiteTable(db);
     }
 
@@ -72,6 +92,17 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("insert into " + TABLE_EMOTICON_SUITE + " values(0,0,'猫和老鼠动图表情包','',4,'http://wx3.sinaimg.cn/bmiddle/005A0PMely1ftpg4dssvjg306o06ok3b.gif,http://wx1.sinaimg.cn/bmiddle/005A0PMely1ftpg4ef3wrg306o06ok7d.gif,http://wx2.sinaimg.cn/bmiddle/005A0PMely1ftpg4ev9glg306o06on9f.gif,http://wx4.sinaimg.cn/bmiddle/005A0PMely1ftpg4f5ytvg306o06on9o.gif',0);");
         db.execSQL("insert into " + TABLE_EMOTICON_SUITE + " values(1,0,'权律二撩妹撩汉表情包','',9,'http://wx3.sinaimg.cn/bmiddle/006B12oSgy1fu4yk6mctwj30hs0hf766.jpg,http://wx2.sinaimg.cn/bmiddle/006B12oSgy1fu4yk8b2wkj30hs0h8jt4.jpg,http://wx2.sinaimg.cn/bmiddle/006B12oSgy1fu4yk7l8g2j30hs0hmq62.jpg,http://wx4.sinaimg.cn/bmiddle/006B12oSgy1fu4yk96e1xj30hs0h376d.jpg,http://wx2.sinaimg.cn/bmiddle/006B12oSgy1fu4yka1j5jj30hs0hsgnr.jpg,http://wx1.sinaimg.cn/bmiddle/006B12oSgy1fu4ykaolm5j30hs0hegna.jpg,http://wx1.sinaimg.cn/bmiddle/006B12oSgy1fu4ykd3723j30hs0h8ta5.jpg,http://wx1.sinaimg.cn/bmiddle/006B12oSgy1fu4ykcgrpbj30hs0hs77g.jpg,http://wx3.sinaimg.cn/bmiddle/006B12oSgy1fu4ykbdxlpj30hs0hg0uq.jpg',0);");
         db.execSQL("insert into " + TABLE_EMOTICON_SUITE + " values(2,0,'表情名','',4,'http://qq.yh31.com/tp/zjbq/201712091833198306.gif,http://qq.yh31.com/tp/zjbq/201711301425316225.gif,http://qq.yh31.com/tp/zjbq/201806272307043903.gif,http://qq.yh31.com/tp/zjbq/201805222259592777.gif',0);");
+    }
+
+    private void createEmoticonsTable(SQLiteDatabase db) {
+        db.execSQL("create table " + TABLE_EMOTICON + " ("
+                + EmoticonColumns._ID + " integer primary key,"
+                + EmoticonColumns.ID + " integer,"
+                + EmoticonColumns.HASH + " integer,"
+                + EmoticonColumns.TYPE + " integer,"
+                + EmoticonColumns.IMAGE_URL + " text,"
+                + EmoticonColumns.TIME + " integer"
+                + ");");
     }
 
     private void createJokeSuiteTable(SQLiteDatabase db) {
@@ -97,6 +128,11 @@ public class Database extends SQLiteOpenHelper {
     public long getNewEmoticonSuiteNum() {
         SQLiteDatabase db = getReadableDatabase();
         return DatabaseUtils.queryNumEntries(db, TABLE_EMOTICON_SUITE, EmoticonSuiteColumns.VISITED + "=0");
+    }
+
+    public long getEmoticonsNum(int type) {
+        SQLiteDatabase db = getReadableDatabase();
+        return DatabaseUtils.queryNumEntries(db, TABLE_EMOTICON, EmoticonColumns.TYPE + "=" + type);
     }
 
     public boolean isExistEmoticonSuite(final  EmoticonSuite emoticonSuite) {
@@ -244,5 +280,72 @@ public class Database extends SQLiteOpenHelper {
         joke.comment = c.getInt(c.getColumnIndex(JokeSuiteColumns.COMMENT));
         joke.time = c.getString(c.getColumnIndex(JokeSuiteColumns.TIME));
         return joke;
+    }
+
+    public boolean addEmoticon(final Emoticon emoticon) {
+        if (isExistEmoticon(emoticon)) {
+            return false;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(EmoticonColumns.ID, emoticon.id);
+        values.put(EmoticonColumns.HASH, emoticon.hash);
+        values.put(EmoticonColumns.TYPE, emoticon.type);
+        values.put(EmoticonColumns.IMAGE_URL, emoticon.url);
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_EMOTICON, EmoticonColumns._ID, values);
+
+        return true;
+    }
+
+    private boolean isExistEmoticon(final Emoticon emoticon) {
+        boolean result = false;
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TABLE_EMOTICON);
+        qb.appendWhere(EmoticonColumns.HASH + "=" + emoticon.hash);
+        Cursor c = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            c = qb.query(db, null, null, null, null, null, null);
+            if (c.moveToFirst()) {
+                return true;
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return result;
+    }
+
+    public List<Emoticon> getBatchEmoticons(int startID, int type, int max_num) {
+        List<Emoticon> emoticons = new LinkedList<>();
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TABLE_EMOTICON);
+        qb.appendWhere(EmoticonColumns._ID + ">" + startID
+                + " and " + EmoticonColumns.TYPE + "=" + type);
+
+        Cursor c = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            c = qb.query(db, null, null, null, null, null, null);
+            while (c.moveToNext() && max_num > 0) {
+                Emoticon emoticon = new Emoticon();
+                emoticon.id = c.getInt(c.getColumnIndex(EmoticonColumns._ID));
+                emoticon.hash = c.getInt(c.getColumnIndex(EmoticonColumns.HASH));
+                emoticon.type = c.getInt(c.getColumnIndex(EmoticonColumns.TYPE));
+                emoticon.url = c.getString(c.getColumnIndex(EmoticonColumns.IMAGE_URL));
+                emoticons.add(emoticon);
+                max_num --;
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+
+        return emoticons;
     }
 }
