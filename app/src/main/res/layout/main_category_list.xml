@@ -69,7 +69,7 @@
                 android:layout_weight="1"
                 android:layout_marginRight="20dp"
                 app:image="@drawable/cute"
-                app:text="萌萌达" >
+                app:text="萌萌哒" >
             </com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout>
 
             <com.mqfcu7.jiangmeilan.emoticon.CategoryNavigateLayout

@@ -1,5 +1,6 @@
 package com.mqfcu7.jiangmeilan.emoticon;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -51,7 +52,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCategoryNavigateLayout() {
-
+        mBinding.cateoryListInclude.mainCategoryStarLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.STAR, "明星红人");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryShowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.SHOW, "撩妹示爱");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryAcgnLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.ACGN, "二次元");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryFestivalLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.FESTIVAL, "节日热点");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryCuteLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.CUTE, "萌萌哒");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryQunLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.QUN, "欢乐群聊");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryComicLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.COMIC, "卡通形象");
+                startActivity(intent);
+            }
+        });
+        mBinding.cateoryListInclude.mainCategoryWishLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.WISH, "祝福祝愿");
+                startActivity(intent);
+            }
+        });
     }
 
     private void initDailyJoke() {

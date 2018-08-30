@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +88,12 @@ public class EmoticonListActivity extends AppCompatActivity {
     }
 
     private void createEmoticonList() {
-
+        mRecyclerView = mBinding.emoticonListRecycleView;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        EmoticonAdapter adapter = new EmoticonAdapter(mEmoticonList);
+        mAdapter = new RecyclerAdapterWithHF(adapter);
+        mRecyclerView.setAdapter(mAdapter);
+        updateEmoticonList(1, 30);
     }
 
     private void createFrameLayout() {

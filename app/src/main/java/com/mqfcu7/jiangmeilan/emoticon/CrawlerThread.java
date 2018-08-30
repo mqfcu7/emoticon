@@ -247,6 +247,7 @@ public class CrawlerThread extends Thread {
                 e.id = i;
                 e.type = Database.EmoticonType.WISH;
                 e.url = "http://qq.yh31.com" + imageUrl;
+                e.calcHash();
                 emoticons.add(e);
             }
         } catch (Exception e) {
