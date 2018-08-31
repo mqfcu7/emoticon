@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setSmoothScrollbarEnabled(false);
         mHotEmoticonRecyclerView.setLayoutManager(linearLayoutManager);
-        mHotEmoticonAdapter = new EmoticonSuiteAdapter(mDatabase.getBatchEmoticonSuites(5));
+        mHotEmoticonAdapter = new EmoticonSuiteAdapter(mDatabase.getBatchEmoticonSuites(3));
         mHotEmoticonRecyclerView.setAdapter(mHotEmoticonAdapter);
         mHotEmoticonRecyclerView.setNestedScrollingEnabled(false);
         mHotEmoticonRecyclerView.setItemViewCacheSize(20);
@@ -176,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     int pos = mHotEmoticonAdapter.getItemCount();
-                    mHotEmoticonAdapter.appendItems(mDatabase.getBatchEmoticonSuites(5));
-                    mHotEmoticonAdapter.notifyItemRangeChanged(pos, 5);
+                    mHotEmoticonAdapter.appendItems(mDatabase.getBatchEmoticonSuites(3));
+                    mHotEmoticonAdapter.notifyItemRangeChanged(pos, 3);
                     mHotPageNum ++;
                 }
             }

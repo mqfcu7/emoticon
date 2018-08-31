@@ -2,6 +2,7 @@ package com.mqfcu7.jiangmeilan.emoticon;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class EmoticonSuiteGenerator extends Object {
 
         EmoticonSuite s = new EmoticonSuite();
         s.title = "你道歉 VS 你女朋友道歉";
-        s.images_url = new LinkedList<>();
         s.images_url.add("http://wx3.sinaimg.cn/bmiddle/005A0PMely1ftpg4dssvjg306o06ok3b.gif");
         s.images_url.add("http://wx1.sinaimg.cn/bmiddle/005A0PMely1ftpg4ef3wrg306o06ok7d.gif");
         s.images_url.add("http://wx2.sinaimg.cn/bmiddle/005A0PMely1ftpg4ev9glg306o06on9f.gif");

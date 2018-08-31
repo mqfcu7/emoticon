@@ -79,10 +79,12 @@ public class CrawlerThread extends Thread {
             return;
         }
 
+        int cnt = 0;
         List<EmoticonSuite> suites = getHotPageEmoticon(getHotPageUrl());
         for (EmoticonSuite emoticon : suites) {
-            mDatabase.addEmoticonSuite(emoticon);
+            cnt += (mDatabase.addEmoticonSuite(emoticon) ? 1 : 0);
         }
+        Log.d("TAG", "updateHot: " + cnt);
 
         mHotEmoticonPageNum ++;
     }

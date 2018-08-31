@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/main_swipe_refresh_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical">
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/main_nested_scroll_view"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/main_swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:background="#eeeeee"
             >
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/main_nested_scroll_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:background="#eeeeee"
+                >
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/background"
+                            android:adjustViewBounds="true"/>
+                    </RelativeLayout>
+
+                    <!-- category icon -->
+                    <include
+                        android:id="@+id/cateory_list_include"
+                        layout="@layout/main_category_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/background"
-                        android:adjustViewBounds="true"/>
-                </RelativeLayout>
+                        />
 
-                <!-- category icon -->
-                <include
-                    android:id="@+id/cateory_list_include"
-                    layout="@layout/main_category_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    <!-- daily joke -->
+                    <include
+                        android:id="@+id/daily_joke_include"
+                        layout="@layout/main_daily_joke"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        />
 
-                <!-- daily joke -->
-                <include
-                    android:id="@+id/daily_joke_include"
-                    layout="@layout/main_daily_joke"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    />
+                    <!-- daily emoticon -->
+                    <include
+                        android:id="@+id/daily_emoticon_include"
+                        layout="@layout/main_daily_emoticon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        />
 
-                <!-- daily emoticon -->
-                <include
-                    android:id="@+id/daily_emoticon_include"
-                    layout="@layout/main_daily_emoticon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    />
+                    <!-- hot emoticon -->
+                    <include
+                        android:id="@+id/hot_emoticon_include"
+                        layout="@layout/main_hot_emoticon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        />
 
-                <!-- hot emoticon -->
-                <include
-                    android:id="@+id/hot_emoticon_include"
-                    layout="@layout/main_hot_emoticon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    />
+                </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
 
-        </android.support.v4.widget.NestedScrollView>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
 </layout>
