@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 mSwipeLayout.setRefreshing(false);
+
+                                initDailyJoke();
+                                mHotEmoticonAdapter.pushItems(mDatabase.getBatchEmoticonSuites(3));
+                                mHotEmoticonAdapter.notifyItemRangeChanged(0, 3);
                             }
                         });
                     }

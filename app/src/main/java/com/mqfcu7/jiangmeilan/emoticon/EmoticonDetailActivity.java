@@ -52,6 +52,7 @@ public class EmoticonDetailActivity extends FragmentActivity {
 
         initBackBanner();
         initViewPager();
+        initShareLayour();
     }
 
     @Override
@@ -75,7 +76,7 @@ public class EmoticonDetailActivity extends FragmentActivity {
     }
 
     private void initViewPager() {
-        ViewPager viewPager = (ViewPager)findViewById(R.id.emoticon_detail_view_pager);
+        ViewPager viewPager = mBinding.emoticonDetailViewPager;
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
@@ -90,5 +91,29 @@ public class EmoticonDetailActivity extends FragmentActivity {
             }
         });
         viewPager.setCurrentItem(mImagePos);
+    }
+
+    private void initShareLayour() {
+        mBinding.emoticonDetailQqImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = mBinding.emoticonDetailViewPager.getCurrentItem();
+                Utils.shareQQ(EmoticonDetailActivity.this, mImageUrls.get(pos));
+            }
+        });
+        mBinding.emoticonDetailWeixinImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = mBinding.emoticonDetailViewPager.getCurrentItem();
+                Utils.shareWeiXin(EmoticonDetailActivity.this, mImageUrls.get(pos));
+            }
+        });
+        mBinding.emoticonDetailDlImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = mBinding.emoticonDetailViewPager.getCurrentItem();
+                Utils.saveNetImage(EmoticonDetailActivity.this, mImageUrls.get(pos));
+            }
+        });
     }
 }

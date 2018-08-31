@@ -1,15 +1,33 @@
 package com.mqfcu7.jiangmeilan.emoticon;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -128,13 +146,86 @@ public class Utils {
         return utfBytes;
     }
 
-    public static String getUserAgent(Context context) {
-        WebView webview;
-        webview = new WebView(context);
-        webview.layout(0, 0, 0, 0);
-        WebSettings settings = webview.getSettings();
-        String ua = settings.getUserAgentString();
-        int pos = ua.indexOf("AppleWebKit");
-        return ua.substring(0, pos) + "AppleWebKit/533.28 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
+    public static void shareQQ(final Activity activity, String url) {
+        Glide.with(activity.getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        Uri uriToImage = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), resource, null, null));
+                        Intent shareIntent = new Intent();
+                        ComponentName comp = new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity");
+                        shareIntent.setComponent(comp);
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+                        shareIntent.setType("image/jpeg");
+                        activity.startActivity(Intent.createChooser(shareIntent, "分享图片"));
+                    }
+                });
+
+    }
+
+    public static void shareWeiXin(final Activity activity, String url) {
+        Glide.with(activity.getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        Uri uriToImage = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), resource, null, null));
+                        Intent shareIntent = new Intent();
+                        ComponentName comp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI");
+                        shareIntent.setComponent(comp);
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+                        shareIntent.setType("image/jpeg");
+                        activity.startActivity(Intent.createChooser(shareIntent, "分享图片"));
+                    }
+                });
+
+    }
+
+    public static void saveNetImage(final Activity activity, String url) {
+        Glide.with(activity.getApplicationContext())
+                .asBitmap()
+                .load(url)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        saveImage(activity, resource);
+                        Toast.makeText(activity.getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private static void saveImage(final Activity activity, final Bitmap image) {
+        String imageFileName = String.valueOf(System.currentTimeMillis()) + ".jpg";
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                + "/local");
+        boolean success = true;
+        if (!storageDir.exists()) {
+            success = storageDir.mkdirs();
+        }
+        if (success) {
+            File imageFile = new File(storageDir, imageFileName);
+            final String savedImagePath = imageFile.getAbsolutePath();
+            try {
+                OutputStream fOut = new FileOutputStream(imageFile);
+                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                fOut.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            galleryAddPic(activity, savedImagePath);
+        }
+    }
+
+    private static void galleryAddPic(final Activity activity, String imagePath) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(imagePath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        activity.sendBroadcast(mediaScanIntent);
     }
 }
