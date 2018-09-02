@@ -3,6 +3,7 @@ package com.mqfcu7.jiangmeilan.emoticon;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -45,10 +47,28 @@ public class MainActivity extends AppCompatActivity {
         Glide.get(getApplicationContext()).clearMemory();
         mEmoticonGenerator = new EmoticonSuiteGenerator(getApplicationContext());
 
+        initSearchText();
         initCategoryNavigateLayout();
         initDailyJoke();
         initDailyEmoticon();
         initHotEmoticon();
+    }
+
+    private void initSearchText() {
+        final EditText searchText = mBinding.mainSearchText;
+        Drawable left = searchText.getCompoundDrawables()[0];
+        if (left != null) {
+            left.setBounds(0, 0, 40, 40);
+            searchText.setCompoundDrawables(left, searchText.getCompoundDrawables()[1],
+                    searchText.getCompoundDrawables()[2], searchText.getCompoundDrawables()[3]);
+        }
+        searchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initCategoryNavigateLayout() {

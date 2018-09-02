@@ -37,6 +37,23 @@
                             android:scaleType="fitXY"
                             android:src="@drawable/background"
                             android:adjustViewBounds="true"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true" >
+                            <EditText
+                                android:id="@+id/main_search_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_marginHorizontal="10dp"
+                                android:layout_marginBottom="20dp"
+                                android:paddingLeft="80dp"
+                                android:background="@drawable/search_shape"
+                                android:textColor="@android:color/darker_gray"
+                                android:drawableLeft="@drawable/search"
+                                android:textSize="17dp"
+                                android:text="  输入关键词，搜索表情" />
+                        </LinearLayout>
                     </RelativeLayout>
 
                     <!-- category icon -->

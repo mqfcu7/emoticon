@@ -112,6 +112,9 @@ public class CrawlerThread extends Thread {
                     String imageUrl = elements.get(j).select("img").attr("data-original");
                     suite.images_url.add(imageUrl);
                 }
+                if (suite.images_url.size() < 4) {
+                    continue;
+                }
                 suite.calcHash();
                 suites.add(suite);
             }
