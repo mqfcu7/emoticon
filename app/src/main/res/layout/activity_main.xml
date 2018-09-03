@@ -52,7 +52,7 @@
                                 android:textColor="@android:color/darker_gray"
                                 android:drawableLeft="@drawable/search"
                                 android:textSize="17dp"
-                                android:text="  输入关键词，搜索表情" />
+                                android:text="输入关键词，搜索表情" />
                         </LinearLayout>
                     </RelativeLayout>
 

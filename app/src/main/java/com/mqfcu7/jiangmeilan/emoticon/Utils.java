@@ -52,8 +52,8 @@ public class Utils {
 
     public static void setStatusBarLightMode(Activity activity, Window window, boolean dark) {
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        Utils.MIUISetStatusBarLightMode(activity, true);
-        Utils.FlymeSetStatusBarLightMode(window, true);
+        Utils.MIUISetStatusBarLightMode(activity, dark);
+        Utils.FlymeSetStatusBarLightMode(window, dark);
     }
 
     public static boolean MIUISetStatusBarLightMode(Activity activity, boolean dark) {

@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText searchText = mBinding.mainSearchText;
         Drawable left = searchText.getCompoundDrawables()[0];
         if (left != null) {
-            left.setBounds(0, 0, 40, 40);
+            left.setBounds(0, 5, 60, 44);
             searchText.setCompoundDrawables(left, searchText.getCompoundDrawables()[1],
                     searchText.getCompoundDrawables()[2], searchText.getCompoundDrawables()[3]);
         }
