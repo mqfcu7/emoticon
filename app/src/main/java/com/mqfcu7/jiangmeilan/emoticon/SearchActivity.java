@@ -1,7 +1,9 @@
 package com.mqfcu7.jiangmeilan.emoticon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,19 +11,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mqfcu7.jiangmeilan.emoticon.databinding.ActivitySearchBinding;
 
+import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SearchActivity extends AppCompatActivity {
     private ActivitySearchBinding mBinding;
+    private Database mDatabase;
 
     private Drawable mCancelDrawable;
 
@@ -30,17 +45,20 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         Utils.setStatusBarLightMode(this, getWindow(), false);
+        mDatabase = new Database(getApplicationContext());
 
         mCancelDrawable = getResources().getDrawable(R.drawable.cancel);
         mCancelDrawable.setBounds(0, 0, 50, 50);
 
         initSearchLayout();
+        initHotSearchUI();
     }
 
     private void initSearchLayout() {
         mBinding.searchBackImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hiddenInputMothod();
                 finish();
             }
         });
@@ -78,12 +96,6 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-        searchText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSearch();
-            }
-        });
         searchText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -103,6 +115,17 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+        searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())) {
+                    onSearch(searchText.getText().toString());
+                }
+                return false;
+            }
+        });
         setSearchUI();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -118,10 +141,35 @@ public class SearchActivity extends AppCompatActivity {
                 if (mBinding.searchCancel.getText().equals("取消")) {
                     cancelInput();
                 } else {
-                    onSearch();
+                    onSearch(mBinding.searchText.getText().toString());
                 }
             }
         });
+    }
+
+    private void initHotSearchUI() {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(10, 10, 10, 10);
+
+        List<String> hotWords = mDatabase.getHotWords();
+        for (final String word : hotWords) {
+            LinearLayout layout = new LinearLayout(getApplicationContext());
+            TextView view = new TextView(getApplicationContext());
+            view.setLayoutParams(lp);
+            view.setBackground(getResources().getDrawable(R.drawable.search_word_shape));
+            view.setTextColor(Color.GRAY);
+            view.setText(word);
+            view.setTextSize(14);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSearch(word);
+                }
+            });
+            layout.addView(view);
+            mBinding.searchFlowLayout.addView(layout);
+        }
     }
 
     private void setSearchUI() {
@@ -163,7 +211,30 @@ public class SearchActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(mBinding.searchText.getWindowToken(), 0);
     }
 
-    private void onSearch() {
-        Log.d("TAG", "search");
+    private void onSearch(final String word) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mDatabase.delSearchEmoticons();
+                try {
+                    String url = "https://fabiaoqing.com/search/search/keyword/" + URLEncoder.encode(word, "utf-8");
+                    Document doc = Jsoup.connect(url).get();
+                    Elements elements = doc.select("div.searchbqppdiv").select("img");
+                    for (int i = 0; i < elements.size(); ++ i) {
+                        Emoticon e = new Emoticon();
+                        e.id = i;
+                        e.url = elements.get(i).attr("data-original");
+                        e.type = Database.EmoticonType.SEARCH;
+                        e.calcHash();
+                        mDatabase.addEmoticon(e);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                hiddenInputMothod();
+                Intent intent = EmoticonListActivity.newIntent(getApplicationContext(), Database.EmoticonType.SEARCH, word);
+                startActivity(intent);
+            }
+        }).start();
     }
 }

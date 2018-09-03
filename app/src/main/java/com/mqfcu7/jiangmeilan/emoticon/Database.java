@@ -21,6 +21,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_EMOTICON_SUITE = "emoticon_suite";
     private static final String TABLE_EMOTICON = "emoticon";
     private static final String TABLE_JOKE_SUITE = "joke_suite";
+    private static final String TABLE_HOT_WORDS = "hot_words";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -36,6 +37,7 @@ public class Database extends SQLiteOpenHelper {
         public static final int QUN = 6;
         public static final int COMIC = 7;
         public static final int WISH = 8;
+        public static final int SEARCH = 9;
     }
 
     public abstract class EmoticonSuiteColumns implements BaseColumns {
@@ -66,6 +68,11 @@ public class Database extends SQLiteOpenHelper {
         public static final String TIME = "time";
     }
 
+    public abstract class HotWordColumns implements BaseColumns {
+        public static final String HASH = "hash";
+        public static final String CONTENT = "content";
+    }
+
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         mContext = context;
@@ -76,6 +83,7 @@ public class Database extends SQLiteOpenHelper {
         createEmoticonSuiteTable(db);
         createEmoticonsTable(db);
         createJokeSuiteTable(db);
+        createHotWordsTable(db);
     }
 
     private void createEmoticonSuiteTable(SQLiteDatabase db) {
@@ -118,6 +126,15 @@ public class Database extends SQLiteOpenHelper {
                 + JokeSuiteColumns.TIME + " text"
                 + ");");
         db.execSQL("insert into " + TABLE_JOKE_SUITE + " values(0,28250836,'奉劝各位，玩手机时间不要太长，伤害很大。最好30分钟就能让眼睛休息下，把视线投向窗外，想一想为什么自己这么穷。','ka便利贴','http://wimg.spriteapp.cn/profile/large/2018/05/23/5b05050010600_mini.jpg',58,3,0,'2018-07-05 07:30:01');");
+    }
+
+    private void createHotWordsTable(SQLiteDatabase db) {
+        db.execSQL("create table " + TABLE_HOT_WORDS + " ("
+                + HotWordColumns._ID + " integer primary key,"
+                + HotWordColumns.HASH + " integer,"
+                + HotWordColumns.CONTENT + " text"
+                + ");");
+        db.execSQL("insert into " + TABLE_HOT_WORDS + " values(0,0,'鼓掌,长者,敬礼,鸡,打,抱,困,凶,谢腾飞,为所欲为,没钱,工作,膜拜,小表情,兔子,你不回我消息我就觉得你在做爱,搬砖,脆皮鸡,哦,没有,请开始你的表演,鞠躬,红色,爸爸,跳舞,上吊');");
     }
 
     @Override
@@ -347,5 +364,69 @@ public class Database extends SQLiteOpenHelper {
         }
 
         return emoticons;
+    }
+
+    public void delSearchEmoticons() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_EMOTICON, EmoticonColumns.TYPE + "=" + EmoticonType.SEARCH, null);
+    }
+
+    public List<String> getHotWords() {
+        List<String> result = new ArrayList<>();
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TABLE_HOT_WORDS);
+
+        Cursor c = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            c = qb.query(db, null, null, null, null, null, null);
+            if (c.moveToFirst()) {
+                String content = c.getString(c.getColumnIndex(HotWordColumns.CONTENT));
+                String[] items = content.split(",");
+                for (String item : items) {
+                    result.add(item);
+                }
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean addHotWords(List<String> data) {
+        String content = StringUtil.join(data, ",");
+        if (isExistHotWords(content)) {
+            return false;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(HotWordColumns.HASH, content.hashCode());
+        values.put(HotWordColumns.CONTENT, content);
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(TABLE_HOT_WORDS, values, HotWordColumns._ID + "=0", null);
+        return true;
+    }
+
+    private boolean isExistHotWords(String content) {
+        boolean result = false;
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TABLE_HOT_WORDS);
+        qb.appendWhere(HotWordColumns.HASH + "=" + content.hashCode());
+        Cursor c = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            c = qb.query(db, null, null, null, null, null, null);
+            if (c.moveToFirst()) {
+                result = true;
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return result;
     }
 }

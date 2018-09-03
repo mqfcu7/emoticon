@@ -66,6 +66,8 @@ public class CrawlerThread extends Thread {
                 crawlQunEmoticons();
                 crawlComicEmoticons();
                 crawlWishEmoticons();
+
+                crawlHotWords();
             try {
                 sleep(2000);
             } catch (Exception e) {
@@ -298,5 +300,25 @@ public class CrawlerThread extends Thread {
             e.printStackTrace();
         }
         return emoticons;
+    }
+
+    private void crawlHotWords() {
+        List<String> hotWords = getHotSearchWords();
+        mDatabase.addHotWords(hotWords);
+    }
+
+    private List<String> getHotSearchWords() {
+        final String url = "https://fabiaoqing.com/";
+        List<String> hotWords = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            Elements elements = doc.select("div.labels").select("a");
+            for (int i = 0; i < elements.size(); ++ i) {
+                hotWords.add(elements.get(i).text());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hotWords;
     }
 }
