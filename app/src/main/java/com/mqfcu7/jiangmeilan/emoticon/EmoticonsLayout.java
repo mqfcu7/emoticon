@@ -1,6 +1,7 @@
 package com.mqfcu7.jiangmeilan.emoticon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
@@ -33,7 +34,12 @@ public class EmoticonsLayout extends LinearLayout {
             mUrls[i] = urls[i];
         }
         if (!mImageViews.isEmpty()) {
+            final List<String> imageUrls = new ArrayList<>();
             for (int i = 0; i < IMAGE_NUM; ++ i) {
+                imageUrls.add(mUrls[i]);
+            }
+            for (int i = 0; i < IMAGE_NUM; ++ i) {
+                final int pos = i;
                 final String url = mUrls[i];
                 int width = (mWidth - IMAGE_PADDING * 5) / IMAGE_NUM;
                 Glide.with(getContext())
@@ -43,8 +49,8 @@ public class EmoticonsLayout extends LinearLayout {
                 mImageViews.get(i).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
-                        //getContext().startActivity(intent);
+                        Intent intent = EmoticonDetailActivity.newIntent(getContext(), "表情", imageUrls, pos);
+                        getContext().startActivity(intent);
                     }
                 });
             }
@@ -78,11 +84,16 @@ public class EmoticonsLayout extends LinearLayout {
         int width = (mWidth - IMAGE_PADDING * 5) / IMAGE_NUM;
         mHeight = width;
 
+        final List<String> imageUrls = new ArrayList<>();
+        for (int i = 0; i < IMAGE_NUM; ++ i) {
+            imageUrls.add(mUrls[i]);
+        }
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         int offx = IMAGE_PADDING;
         for (int i = 0; i < IMAGE_NUM; ++ i) {
+            final int pos = i;
             final String url = mUrls[i];
             ImageView v = new ImageView(getContext());
             v.setPadding(IMAGE_PADDING / 2, 0, IMAGE_PADDING / 2, 0);
@@ -94,8 +105,8 @@ public class EmoticonsLayout extends LinearLayout {
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent intent = AvatarDetailActivity.newIntent(getContext(), url);
-                    //getContext().startActivity(intent);
+                    Intent intent = EmoticonDetailActivity.newIntent(getContext(), "表情", imageUrls, pos);
+                    getContext().startActivity(intent);
                 }
             });
             addView(v, layoutParams);

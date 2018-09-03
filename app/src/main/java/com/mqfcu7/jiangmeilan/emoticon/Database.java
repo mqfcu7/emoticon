@@ -125,7 +125,7 @@ public class Database extends SQLiteOpenHelper {
                 + JokeSuiteColumns.COMMENT + " integer,"
                 + JokeSuiteColumns.TIME + " text"
                 + ");");
-        db.execSQL("insert into " + TABLE_JOKE_SUITE + " values(0,28250836,'奉劝各位，玩手机时间不要太长，伤害很大。最好30分钟就能让眼睛休息下，把视线投向窗外，想一想为什么自己这么穷。','ka便利贴','http://wimg.spriteapp.cn/profile/large/2018/05/23/5b05050010600_mini.jpg',58,3,0,'2018-07-05 07:30:01');");
+        db.execSQL("insert into " + TABLE_JOKE_SUITE + " values(0,28250836,'有一种在意，叫\"你见到的永远都是洗了头的我\"。','ka便利贴','http://wimg.spriteapp.cn/profile/large/2018/05/23/5b05050010600_mini.jpg',58,3,0,'2018-07-05 07:30:01');");
     }
 
     private void createHotWordsTable(SQLiteDatabase db) {
